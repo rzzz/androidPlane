@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 
 /**
  * @author Himi	 //摘自himi
- *
+ * 开始游戏菜单
  */
 public class GameMenu {
 	//菜单背景图

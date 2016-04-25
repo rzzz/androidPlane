@@ -78,18 +78,24 @@ public class Bullet {
 		this.bmpBullet = bmpBullet;
 		this.bulletX = bulletX;
 		this.bulletY = bulletY;
-		this.bulletType = bulletType;
+		this.bulletType = BULLET_BOSS;	//必定boss类型
 		speed = 5;
 		this.dir = dir;
 	}
 
 	//子弹的绘制
 	public void draw(Canvas canvas, Paint paint) {
+		if(isDead) return;
+		
+		canvas.save();
 		canvas.drawBitmap(bmpBullet, bulletX, bulletY, paint);
+		canvas.restore();
 	}
 
 	//子弹的逻辑
 	public void logic() {
+		if(isDead) return;
+		
 		//不同的子弹类型逻辑不一
 		//主角的子弹垂直向上运动
 		switch (bulletType) {

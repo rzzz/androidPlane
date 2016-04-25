@@ -10,8 +10,7 @@ import android.graphics.Paint;
  */
 public class Enemy {
 	//敌机的种类标识
-	public int type;
-	
+	public int type;	
 	//苍蝇
 	public static final int TYPE_FLY = 1;
 	//鸭子(从左往右运动)
@@ -58,6 +57,8 @@ public class Enemy {
 
 	//敌机绘图函数
 	public void draw(Canvas canvas, Paint paint) {
+		if(isDead) return;
+		
 		canvas.save();
 		canvas.clipRect(x, y, x + frameW, y + frameH);
 		canvas.drawBitmap(bmpEnemy, x - frameIndex * frameW, y, paint);
@@ -66,6 +67,8 @@ public class Enemy {
 
 	//敌机逻辑AI
 	public void logic() {
+		if(isDead) return;
+		
 		//不断循环播放帧形成动画
 		frameIndex++;
 		if (frameIndex >= 10) {
@@ -74,7 +77,6 @@ public class Enemy {
 		//不同种类的敌机拥有不同的AI逻辑
 		switch (type) {
 		case TYPE_FLY:
-			if (isDead == false) {
 				//减速出现，加速返回
 				speed -= 1;
 				y += speed;
@@ -82,10 +84,8 @@ public class Enemy {
 				if (y <= -200) {
 					isDead = true;
 				}
-			}
 			break;
 		case TYPE_DUCKL:
-			if (isDead == false) {
 				//斜右下角运动
 				x += speed / 2;
 				y += speed;
@@ -93,10 +93,8 @@ public class Enemy {
 				if (x > MySurfaceView.screenW) {
 					isDead = true;
 				}
-			}
 			break;
 		case TYPE_DUCKR:
-			if (isDead == false) {
 				//斜左下角运动
 				x -= speed / 2;
 				y += speed;
@@ -104,7 +102,6 @@ public class Enemy {
 				if (x <= -100) {
 					isDead = true;
 				}
-			}
 			break;
 		}
 	}
@@ -116,13 +113,13 @@ public class Enemy {
 			int y2 = bullet.bulletY;
 			int w2 = bullet.bmpBullet.getWidth();
 			int h2 = bullet.bmpBullet.getHeight();
-			if (x >= x2 && x >= x2 + w2) {
+			if (x >= x2 + w2) {
 				return false;
-			} else if (x <= x2 && x + frameW <= x2) {
+			} else if (x + frameW <= x2) {
 				return false;
-			} else if (y >= y2 && y >= y2 + h2) {
+			} else if (y >= y2 + h2) {
 				return false;
-			} else if (y <= y2 && y + frameH <= y2) {
+			} else if (y + frameH <= y2) {
 				return false;
 			}
 			//发生碰撞，让其死亡

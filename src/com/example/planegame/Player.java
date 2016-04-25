@@ -143,7 +143,7 @@ public class Player {
 
 	// ÅĞ¶ÏÅö×²(Ö÷½ÇÓëµĞ»ú)
 	public boolean isCollsionWith(Enemy en) {
-		if (isCollision == false) {
+		if (!isCollision) {
 			int x2 = en.x;
 			int y2 = en.y;
 			int w2 = en.frameW;
